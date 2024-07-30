@@ -27,12 +27,13 @@ Issues Addressed
 
 1.  **Inefficiency**: It's not always necessary (or desired) to update all libraries, or even a library index, when it would suffice to update just the show in tMM.
 2.  **Queue Management**: tMM's queue system is a bit wonky; updates may execute while another action is being processed, causing things to get missed.
-3.  **Conditional Logic**: Reduce the need for multiple custom scripts in Sonarr for different events
+3.  **Conditional Logic**: Reduce the need for multiple custom scripts in Sonarr for different events.
+4.  **Sonarr Series Delete**: Sonarr struggles to delete entire series in a timely fashion (sometimes fails to delete the directory at all). 
 
 Approach
 --------
 
-I started out thinking I could create a script to check if a show exists in tMM when sending commands from Sonarr, but tMM's HTTP API options are limited. Ultimately, I ended up checking for the existence of the `tvshow.nfo` file. If it doesn't exist, tMM hasn't scraped the show yet, so the script should update the library and scrape new items. After the first episode, only the "show" needs to be updated in tMM, which is much more efficient.
+I started out thinking I could create a script to check if a show exists in tMM when sending commands from Sonarr, which seems like it should be a simple thing but tMM's HTTP API options are limited. This was challenging as there is no straighforward way to request the needed information from tMM's API. Ultimately, I ended up checking for the existence of the `tvshow.nfo` file. If it doesn't exist, tMM hasn't scraped the show yet, so the script should update the library and scrape new items which picks up the show and scrapes the show level metadata. After the first episode, only the "show" needs to be updated in tMM, which is much more efficient. As I was working on the script, I discovered more and more scenarios that could be cared for, so it was adapted, and I also needed to log everything for debugging. The script ended up MUCH more complex than I set out to create, but I'm very happy with the result, even though some of the solutions involved less-than-ideal techniques.
 
 Summary
 -------
@@ -86,19 +87,18 @@ Prerequisites
 1.  Sonarr and tMM must be installed and working.
 2.  tMM configured to use its HTTP API: [tMM HTTP API Documentation](https://www.tinymediamanager.org/docs/http-api).
 3.  Sonarr must have access to the tMM log directory (read-only at minimum).
-4.  If using Docker for Sonarr, add a volume mapping to your Compose/Run config (e.g., `/path/to/tmm/logs:/tmm-logs:ro`).
+    -    If using Docker for Sonarr, add a volume mapping to your Compose/Run config (e.g., `/path/to/tmm/logs:/tmm-logs:ro`).
 5.  Sonarr must not be allowed to create `tvshow.nfo` (Metadata settings).
-6.  The script must be executable:
-    `chmod +x /path/to/kitchen_sink.sh`
-7. Patience - The script checks the `tmm.log` file to determine if tMM is idle before sending any commands. Don't assume you're going to see activity in tMM immediately when events occur in Sonarr. The script will continually add commands to, and pull commands from, the queue file, and then send them to tMM when it's ready. Adjust the `$delay` variable if you notice overlapping commands in tMM.
+6.  The script must be executable.
+7.  Patience - The script checks the `tmm.log` file to determine if tMM is idle before sending any commands. Don't assume you're going to see activity in tMM immediately when events occur in Sonarr. The script will continually add commands to, and pull commands from, the queue file, and then send them to tMM when it's ready. Adjust the `$delay` variable if you notice overlapping commands in tMM.
 
 Instructions
 ------------
 
-1. **Download kitchen-sink.sh from the repository**
+1.  **Download kitchen-sink.sh from the repository**
 2.  **Update the User-defined variables and save the script**
 3.  **Make the script executable**:
-    - `chmod +x /path/to/kitchen_sink.sh`
+    -    `chmod +x /path/to/kitchen_sink.sh`
 1.  **Open Sonarr web interface**
 2.  **Navigate to Connect settings**:
     -   Click on Settings in the left-hand menu.
