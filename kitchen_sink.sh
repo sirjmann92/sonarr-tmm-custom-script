@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # tinyMediaManager HTTP API information: https://www.tinymediamanager.org/docs/http-api
+    # NOTE: tMM's HTTP API documentation indicates the first library index is 0. However, during the building of this script I discovered that it actually starts at 1, at least for the tvshow module
 # Sonarr (partial) Custom Script documentation with some Sonarr environment variables: https://wiki.servarr.com/sonarr/custom-scripts
 
 # User-defined variables
@@ -14,9 +15,11 @@ max_log_size=1048576 # Maximum log size before rotating
 delay=20 # Delay to check tmm.log for changes
 series_delete_delay=3 # Small delay to confirm series deletion
 retry_count=10 # Number of times to retry, used in SeriesDelete command
-declare -A library_paths=( # Add as many tMM data sources as you need
+declare -A library_paths=( # Add/remove as many tMM data sources as you need
     [1]="/share/Shows"
     [2]="/share/Anime/Shows"
+#    [3]="/another/tmm/data/source"
+#    [4]="/yet/another/tmm/data/source"
 )
 
 # Sonarr environment variables
