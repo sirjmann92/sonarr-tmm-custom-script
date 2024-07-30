@@ -27,7 +27,7 @@ Issues Addressed
 
 1.  **Inefficiency**: It's not always necessary (or desired) to update all libraries, or even a library index, when it would suffice to update just the show in tMM.
 2.  **Queue Management**: tMM's queue system is a bit wonky; updates may execute while another action is being processed, causing things to get missed.
-3.  **Conditional Logic**: Reduce the need for multiple custom scripts in tMM for different events
+3.  **Conditional Logic**: Reduce the need for multiple custom scripts in Sonarr for different events
 
 Approach
 --------
