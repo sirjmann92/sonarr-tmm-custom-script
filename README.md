@@ -90,7 +90,8 @@ Prerequisites
     -    If using Docker for Sonarr, add a volume mapping to your Compose/Run config (e.g., `/path/to/tmm/logs:/tmm-logs:ro`).
 5.  Sonarr must not be allowed to create `tvshow.nfo` (Metadata settings).
 6.  The script must be executable.
-7.  Patience - The script checks the `tmm.log` file to determine if tMM is idle before sending any commands. Don't assume you're going to see activity in tMM immediately when events occur in Sonarr. The script will continually add commands to, and pull commands from, the queue file, and then send them to tMM when it's ready. Adjust the `$delay` variable if you notice overlapping commands in tMM.
+7.  Patience
+    -    The script checks the `tmm.log` file to determine if tMM is idle before sending any commands. Don't assume you're going to see activity in tMM immediately when events occur in Sonarr. The script will continually add commands to, and pull commands from, the queue file, and then send them to tMM when it's ready. Adjust the `$delay` variable if you notice overlapping commands in tMM.
 
 Instructions
 ------------
