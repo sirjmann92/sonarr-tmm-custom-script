@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # tinyMediaManager HTTP API information: https://www.tinymediamanager.org/docs/http-api
-    # NOTE: tMM's HTTP API documentation indicates the first library index is 0. However, during the building of this script I discovered that it actually starts at 1, at least for the tvshow module
+    # NOTE: tMM's HTTP API documentation indicates the first library index is 0.
+    # However, during the building of this script I discovered that it actually starts at 1, at least for the tvshow module
 # Sonarr (partial) Custom Script documentation with some Sonarr environment variables: https://wiki.servarr.com/sonarr/custom-scripts
 
 # User-defined variables
