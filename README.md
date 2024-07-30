@@ -109,7 +109,7 @@ Instructions
     -   Select Custom Script from the list of available options.
 4.  **Configure the Custom Script**:
     -   **Name**: Give your script a name for easy identification (e.g. tMM - Kitchen Sink)
-    -   **Path**: Enter the full path to your script file (e.g., /path/to/kitchen_sink.sh).
+    -   **Path**: Enter the full path to your script file (e.g. /path/to/kitchen_sink.sh).
 5.  **Select the events you want the script to trigger on**:
     -   **Recommended**:
         -  On Import Complete
