@@ -129,7 +129,7 @@ Instructions
 Example log
 -----------
 
-```sh
+```text
 2024-07-29 14:11:58 [INFO] Event type: Test
 2024-07-29 14:11:58 [INFO] Unsupported event type: Test. No action taken...
 2024-07-29 14:13:31 [INFO] Event type: EpisodeFileDelete
