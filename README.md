@@ -33,7 +33,7 @@ Issues Addressed
 Approach
 --------
 
-I started out thinking I could create a script to check if a show exists in tMM when sending commands from Sonarr, which seems like it should be a simple thing but tMM's HTTP API options are limited. This was challenging as there is no straighforward way to request the needed information from tMM's API. Ultimately, I ended up checking for the existence of the `tvshow.nfo` file. If it doesn't exist, tMM hasn't scraped the show yet, so the script should update the library and scrape new items which picks up the show and scrapes the show level metadata. After the first episode, only the "show" needs to be updated in tMM, which is much more efficient. As I was working on the script, I discovered more and more scenarios that could be cared for, so it was adapted, and I also needed to log everything for debugging. The script ended up MUCH more complex than I set out to create, but I'm very happy with the result, even though some of the solutions involved less-than-ideal techniques.
+I started out thinking I could create a script to check if a show exists in tMM when sending commands from Sonarr, which seems like it should be a simple thing but tMM's HTTP API options are limited. This was challenging as there is no straighforward way to request the needed information from tMM's API. Ultimately, I ended up checking for the existence of the `tvshow.nfo` file. If it doesn't exist, tMM hasn't scraped the show yet, so the script should update the library and scrape new items which picks up the show and scrapes the show level metadata. After the first episode, only the "show" needs to be updated in tMM, which is much more efficient. As I was working on the script, I discovered more and more scenarios that could be cared for, so it was adapted, and I also needed to log everything for debugging. The script ended up MUCH more complex than I set out to create, but I'm very happy with the result, even though some of the solutions involve less-than-ideal techniques.
 
 Summary
 -------
@@ -85,7 +85,7 @@ Prerequisites
 -------------
 
 1.  Sonarr and tMM must be installed and working.
-2.  tMM configured to use its HTTP API: [tMM HTTP API Documentation](https://www.tinymediamanager.org/docs/http-api).
+2.  tMM must be configured to use its HTTP API: [tMM HTTP API Documentation](https://www.tinymediamanager.org/docs/http-api).
 3.  Sonarr must have access to the tMM log directory (read-only at minimum).
     -    If using Docker for Sonarr, add a volume mapping to your Compose/Run config (e.g., `/path/to/tmm/logs:/tmm-logs:ro`).
 5.  Sonarr must not be allowed to create `tvshow.nfo` (Metadata settings).
@@ -113,7 +113,8 @@ Instructions
 5.  **Select the events you want the script to trigger on**:
     -   **Recommended**:
         -  On Import Complete
-        -  On Rename, On Series Delete
+        -  On Rename
+        -  On Series Delete
         -  On Episode File Delete
         -  On Episode File Delete for Upgrade
     -   **Tags**: Optionally, add tags if you want the script to run only for series with specific tags.
