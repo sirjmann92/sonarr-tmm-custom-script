@@ -161,11 +161,33 @@ queue_commands() {
         log "INFO" "Updating ${series_title}."
         add_to_queue "$update_show"
         ;;
-    "Rename") # On file rename, update the show and scrape new items (renamed files are detected as new files in tMM)
+    "Rename") # On file rename, update the library/show and scrape renamed items (renamed files are detected as new files in tMM)
         log "INFO" "Previous path(s): ${previous_relative_path}"
         log "INFO" "New path(s): ${relative_path}"
-        log "INFO" "Updating ${series_title} and scraping new items."
-        add_to_queue "$update_show,$scrape_new"
+        if [ -f "$nfo_file" ]; then
+            log "INFO" "${series_title} already exists in tMM."
+            log "INFO" "Updating ${series_title} and scraping renamed items."
+            add_to_queue "$update_show,$scrape_new"
+        else
+            log "INFO" "${series_title} does not exist in tMM."
+            # If the show doesn't exist in tMM, update the library by index to pick up renamed items and scrape them
+            library_found=false
+            for library_index in "${!library_paths[@]}"; do
+                if [[ "$series_path" == ${library_paths[$library_index]}* ]]; then
+                    log "INFO" "Updating library index $library_index and scraping renamed items."
+                    update_library='{"action":"update", "scope":{"name":"single", "args":["'"${library_index}"'"]}}'
+                    add_to_queue "$update_library,$scrape_new"
+                    library_found=true
+                    break
+                fi
+            done
+            # If library path is incorrect or not found, update all libraries and scrape new and unscraped items (fallback)
+            if [ "$library_found" = false ]; then
+                log "WARN" "Path not found. Updating all libraries and scraping new and unscraped items."
+                add_to_queue "$update_all,$scrape_new"
+                add_to_queue "$scrape_unscraped"
+            fi
+        fi
         ;;
     "Download") # If the show exists in tMM, update the show and scrape new items
         if [ -f "$nfo_file" ]; then
