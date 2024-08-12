@@ -168,6 +168,7 @@ queue_commands() {
             log "INFO" "${series_title} already exists in tMM."
             log "INFO" "Updating ${series_title} and scraping renamed items."
             add_to_queue "$update_show,$scrape_new"
+            add_to_queue "$scrape_unscraped" # Catch and scrape any previously missed items
         else
             log "INFO" "${series_title} does not exist in tMM."
             # If the show doesn't exist in tMM, update the library by index to pick up renamed items and scrape them
@@ -177,6 +178,7 @@ queue_commands() {
                     log "INFO" "Updating library index $library_index and scraping renamed items."
                     update_library='{"action":"update", "scope":{"name":"single", "args":["'"${library_index}"'"]}}'
                     add_to_queue "$update_library,$scrape_new"
+                    add_to_queue "$scrape_unscraped" # Catch and scrape any previously missed items
                     library_found=true
                     break
                 fi
@@ -185,7 +187,7 @@ queue_commands() {
             if [ "$library_found" = false ]; then
                 log "WARN" "Path not found. Updating all libraries and scraping new and unscraped items."
                 add_to_queue "$update_all,$scrape_new"
-                add_to_queue "$scrape_unscraped"
+                add_to_queue "$scrape_unscraped" # Catch and scrape any previously missed items
             fi
         fi
         ;;
@@ -195,6 +197,7 @@ queue_commands() {
             log "INFO" "${series_title} already exists in tMM."
             log "INFO" "Updating ${series_title} and scraping new items."
             add_to_queue "$update_show,$scrape_new"
+            add_to_queue "$scrape_unscraped" # Catch and scrape any previously missed items
         else
             log "INFO" "${series_title} does not exist in tMM."
             # If the show doesn't exist in tMM, update only the library by index to pick up the new show and scrape new items
@@ -204,6 +207,7 @@ queue_commands() {
                     log "INFO" "Updating library index $library_index and scraping new items."
                     update_library='{"action":"update", "scope":{"name":"single", "args":["'"${library_index}"'"]}}'
                     add_to_queue "$update_library,$scrape_new"
+                    add_to_queue "$scrape_unscraped" # Catch and scrape any previously missed items
                     library_found=true
                     break
                 fi
@@ -212,7 +216,7 @@ queue_commands() {
             if [ "$library_found" = false ]; then
                 log "WARN" "Path not found. Updating all libraries and scraping new and unscraped items."
                 add_to_queue "$update_all,$scrape_new"
-                add_to_queue "$scrape_unscraped"
+                add_to_queue "$scrape_unscraped" # Catch and scrape any previously missed items
             fi
         fi
         ;;
