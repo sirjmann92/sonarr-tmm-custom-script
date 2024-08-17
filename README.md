@@ -78,7 +78,7 @@ Features
     -   **Download**:
         -   If show exists:
             -   Update "show" and scrape both "new" and "unscraped" items (fallback)
-            -   Check for, and downloads, missing artwork at the show level (by path)
+            -   Check for, and download, missing artwork at the show level (by path)
         -   If show does not exist:
             -   Update "library" and scrape both "new" and "unscraped" (fallback)
         -   If unknown:
