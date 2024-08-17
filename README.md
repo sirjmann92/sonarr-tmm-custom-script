@@ -1,4 +1,4 @@
-Kitchen Sink Custom Script for Sonarr and tinyMediaManager
+Kitchen Sink - Custom Script for Sonarr and tinyMediaManager
 ==========================================================
 
 Disclaimer
