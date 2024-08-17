@@ -39,6 +39,7 @@ update_all='{"action":"update", "scope":{"name":"all"}}'
 scrape_new='{"action":"scrape", "scope":{"name":"new"}}'
 scrape_unscraped='{"action":"scrape", "scope":{"name":"unscraped"}}'
 scrape_all='{"action":"scrape", "scope":{"name":"all"}}'
+download_artwork='{"action":"downloadMissingArtwork", "scope":{"name":"path", "args":["'"${series_path}"'"]}}'
 
 # tvshow.nfo file location
 nfo_file="${series_path}/tvshow.nfo"
@@ -169,6 +170,7 @@ queue_commands() {
             log "INFO" "Updating ${series_title} and scraping renamed items."
             add_to_queue "$update_show,$scrape_new"
             add_to_queue "$scrape_unscraped" # Catch and scrape any previously missed items
+            add_to_queue "$download_artwork" # Check for, and download, missing artwork at the show level (by path)
         else
             log "INFO" "${series_title} does not exist in tMM."
             # If the show doesn't exist in tMM, update the library by index to pick up renamed items and scrape them
@@ -198,6 +200,7 @@ queue_commands() {
             log "INFO" "Updating ${series_title} and scraping new items."
             add_to_queue "$update_show,$scrape_new"
             add_to_queue "$scrape_unscraped" # Catch and scrape any previously missed items
+            add_to_queue "$download_artwork" # Check for, and download, missing artwork at the show level (by path)
         else
             log "INFO" "${series_title} does not exist in tMM."
             # If the show doesn't exist in tMM, update only the library by index to pick up the new show and scrape new items
