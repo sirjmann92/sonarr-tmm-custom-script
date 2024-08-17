@@ -68,14 +68,21 @@ Features
 
 -   Handles different Sonarr events (SeriesDelete, EpisodeFileDelete, Rename, and Download) and queues appropriate tMM commands based on these events.
     -   **SeriesDelete**: Delete the Series directory. tMM update "show" only
-        -  Sonarr's ability to delete an entire series is slow, at best, and often fails to remove the directory (posibly because tMM or other external applications have added files). This script will force removal of the directory immediately and confirm it has been deleted before sending any commands to tMM. 
-    -   **EpisodeFileDelete**: tMM update "show" only
-    -   **Rename**: tMM update "show" and scrape both "new" and "unscraped" (fallback)
-        - tMM sees renamed files as "New" files, appropriately. So, we need to rediscover and rescrape the files when a Rename event is detected.
+        -  Sonarr's ability to delete an entire series is slow, at best, and often fails to remove the directory (posibly because tMM or other external applications have added files). This script will force removal of the directory immediately and confirm it has been deleted before sending any commands to tMM.
+    -   **EpisodeFileDelete**:
+        -   tMM updates "show" only
+    -   **Rename**:
+        - Update "show" and scrape both "new" and "unscraped" items (fallback)
+            - tMM sees renamed files as "New" files, appropriately. So, we need to rediscover and rescrape the files when a Rename event is detected.
+        - Check for, and download, missing artwork at the show level (by path)
     -   **Download**:
-        -   If show exists: tMM update "show" and scrape both "new" and "unscraped" (fallback)
-        -   If show does not exist: update "library" and scrape both "new" and "unscraped" (fallback)
-        -   If unknown: update "all" and scrape both "new" and "unscraped" (fallback)
+        -   If show exists:
+            -   Update "show" and scrape both "new" and "unscraped" items (fallback)
+            -   Check for, and downloads, missing artwork at the show level (by path)
+        -   If show does not exist:
+            -   Update "library" and scrape both "new" and "unscraped" (fallback)
+        -   If unknown:
+            -   Update "all" libraries and scrape both "new" and "unscraped" (fallback)
 
 ### Unknown or Unsupported Event Types
 
