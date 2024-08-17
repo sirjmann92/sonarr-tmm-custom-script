@@ -70,11 +70,11 @@ Features
     -   **SeriesDelete**: Delete the Series directory. tMM update "show" only
         -  Sonarr's ability to delete an entire series is slow, at best, and often fails to remove the directory (posibly because tMM or other external applications have added files). This script will force removal of the directory immediately and confirm it has been deleted before sending any commands to tMM. 
     -   **EpisodeFileDelete**: tMM update "show" only
-    -   **Rename**: tMM update "show" and scrape "new"
+    -   **Rename**: tMM update "show" and scrape both "new" and "unscraped" (fallback)
         - tMM sees renamed files as "New" files, appropriately. So, we need to rediscover and rescrape the files when a Rename event is detected.
     -   **Download**:
-        -   If show exists: tMM update "show" and scrape "new"
-        -   If not: update "library" and scrape "new"
+        -   If show exists: tMM update "show" and scrape both "new" and "unscraped" (fallback)
+        -   If show does not exist: update "library" and scrape both "new" and "unscraped" (fallback)
         -   If unknown: update "all" and scrape both "new" and "unscraped" (fallback)
 
 ### Unknown or Unsupported Event Types
