@@ -3,8 +3,7 @@ Kitchen Sink - Custom Script for Sonarr and tinyMediaManager
 
 Disclaimer
 ----------
-
-I am *NOT* a developer. I'm just a guy trying to improve more tedious aspects of day-to-day life and sharing what I've created. I leaned heavily on AI to help produce my concepts and then tested for my use case and made adjustments. The script is not perfect but it works pretty well in my environment from my testing. YMMV.
+This script uses timers and log file size changes to determine actions, rather than responses from tMM's HTTP API because the necessary calls and data do not exist. This means the script is not perfect but it works very well in my environment for my use cases. YMMV. It also helps to create scheduled tasks or cron jobs that run periodically to pick up anything that this script may have missed, or to add new metadata as it becomes available since new shows don't always have all of the metadata and/or artwork available. I've uploaded additional scripts that can be modified for your environment to cover these tasks: Scan for and download missing artwork, scan for and update show and episode ratings, scan for and scrape new and unscraped shows and episodes.
 
 Feel free to use this and let me know your results, problems, or improvements that could be made.
 
