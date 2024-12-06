@@ -25,7 +25,7 @@ declare -A library_paths=( # Add as many tMM data sources as you need, in the or
 
 # Sonarr environment variables
 event="${sonarr_eventtype}"
-series_path="${sonarr_series_path}"
+series_path="${sonarr_series_path%/}"
 series_title="${sonarr_series_title}"
 series_deletedfiles="${sonarr_series_deletedfiles}"
 relative_path="${sonarr_episodefile_relativepath:-$sonarr_episodefile_relativepaths}"
@@ -236,13 +236,17 @@ queue_commands() {
     log "INFO" "Event type: ${event}"
     [ -n "$series_title" ] && log "INFO" "Series title: ${series_title}"
     [ -n "$series_path" ] && log "INFO" "Series path: ${series_path}"
+    #    printenv >> "$log_file" # Print available environment variables to log file
 
+    # Check for lock before processing queue
     if create_lock; then
         queue_commands
         if [ "$unsupported_event" = false ]; then
             log "INFO" "Checking if tMM is idle..."
             process_queue
         fi
+    
+    # If another instance is running, add commands to queue and exit
     else
         if [ "$unsupported_event" = false ]; then
             log "WARN" "Another instance is running. Adding command(s) to queue and exiting."
